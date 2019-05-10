@@ -125,7 +125,7 @@
                     .catch(function (resp) {
                         if (resp != 200) {
                             console.log(resp);
-                            alert("Could not create your unit");
+                            alert("Could not create outcome");
                         }
                     });
             },

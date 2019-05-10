@@ -63323,7 +63323,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (resp) {
                 if (resp != 200) {
                     console.log(resp);
-                    alert("Could not create your unit");
+                    alert("Could not create outcome");
                 }
             });
         }
@@ -64034,7 +64034,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }).catch(function (resp) {
                 if (resp != 200) {
                     console.log(resp);
-                    alert("Could not create your unit");
+                    alert("Could not create output");
                 }
             });
         }
@@ -64194,7 +64194,7 @@ var render = function() {
                 _vm._v("Select Sector")
               ]),
               _vm._v(" "),
-              _vm._l(_vm.organisations, function(data) {
+              _vm._l(_vm.sectors, function(data) {
                 return _c(
                   "option",
                   {

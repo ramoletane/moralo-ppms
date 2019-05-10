@@ -25,22 +25,27 @@ class OutcomeController extends Controller
 	 *
      * @return array
      */
-	public function frontend($impactId)
+	public function frontend($impactId = NULL)
 	{
-//		if ($request->route()->named('outcomes')) {
 		$impact = DB::table('impacts')
 			->where('id', $impactId)
 			->get();
 		
-		$outcomes = DB::table('outcomes')
-			->join('organisations', 'outcomes.company_id', '=', 'organisations.id')
-			->join('impacts', 'outcomes.impact_id', '=', 'impacts.id')
-			->select('outcomes.id', 'outcome_name', 'company_id', 'company_name')
-			->where('impacts.id', $impactId)
-			->get();
-
+		if (isset($impactId)) {			
+			$outcomes = DB::table('outcomes')
+				->join('organisations', 'outcomes.company_id', '=', 'organisations.id')
+				->join('impacts', 'outcomes.impact_id', '=', 'impacts.id')
+				->select('outcomes.id', 'outcome_name', 'company_id', 'company_name')
+				->where('impacts.id', $impactId)
+				->get();
+		} else {
+			$outcomes = DB::table('outcomes')
+				->join('organisations', 'outcomes.company_id', '=', 'organisations.id')
+				->select('outcomes.id', 'outcome_name', 'company_id', 'company_name')
+				->get();
+		}
+		
 		return view('outcomes', ['outcomes' => $outcomes, 'impact' => $impact]);
-//		}
 	}
 
     /**

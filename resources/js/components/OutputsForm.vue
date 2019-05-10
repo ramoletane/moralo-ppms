@@ -20,7 +20,7 @@
                 <label class="control-label">Sector</label>
                 <select v-model="output.sector_name" v-on:change="setSector($event)" class="form-control">
                     <option value='0' >Select Sector</option>
-                    <option v-for='data in organisations' :id='data.id' :value='data.sector_name' :key='data.id'>{{ data.sector_name }}</option>
+                    <option v-for='data in sectors' :id='data.id' :value='data.sector_name' :key='data.id'>{{ data.sector_name }}</option>
                 </select>
             </div>
         </div>
@@ -125,7 +125,7 @@
                     .catch(function (resp) {
                         if (resp != 200) {
                             console.log(resp);
-                            alert("Could not create your unit");
+                            alert("Could not create output");
                         }
                     });
             },
