@@ -6,6 +6,7 @@ use App\Http\Controllers\OrganisationController;
 use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ImpactController;
+use App\Http\Controllers\CompetencyGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('industries', IndustryController::class);
     Route::resource('sectors', SectorController::class);
     Route::resource('impacts', ImpactController::class);
+    Route::resource('competency_groups', CompetencyGroupController::class);
 });
 
 Route::resource('results', ResultController::class)

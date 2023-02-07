@@ -53,16 +53,9 @@ class SectorTest extends TestCase
             ->actingAs($user)
             ->get('/sectors/create');
         //The user sees a page with a form to create a record
-        $response->assertStatus(200);
-        $options = Industry::pluck('industry_name', 'id');
-        $view = $this->blade(
-            '<x-forms.select id="industry-name" name="industry_name" :options="' . $options . '" />'
-        );
-        $view->assertSee('industry_name');
-        $view = $this->blade(
-            '<x-text-input id="sector-name" name="sector_name" type="text" />',
-        );
-        $view->assertSee('sector_name');
+        $response
+            ->assertStatus(200)
+            ->assertSee('sector_name');
     }
 
     /**
@@ -77,12 +70,12 @@ class SectorTest extends TestCase
         $user = User::factory()->create();
         //When the user submits new data
         $this->seed(IndustrySeeder::class);
-        $industryIDs = Industry::pluck('id');
+        $sectorIDs = Industry::pluck('id');
         $response = $this
             ->actingAs($user)
             ->post(route('sectors.store', [
                 'sector_name' => 'Software Engineering',
-                'industry_id' => fake()->randomElement($industryIDs),
+                'sector_id' => fake()->randomElement($sectorIDs),
             ]));
         $response
             ->assertSessionHasNoErrors()
@@ -138,15 +131,9 @@ class SectorTest extends TestCase
             ->get(route('sectors.edit', $sector));
         //The user sees a page with a form to edit the record
         $response
-            ->assertStatus(200);
-        $view = $this->blade(
-            '<x-forms.select id="industry-name" name="industry_name" :options="' . $options . '" />'
-        );
-        $view->assertSee('industry_name');
-        $view = $this->blade(
-            '<x-text-input id="sector-name" name="sector_name" type="text" />',
-        );
-        $view->assertSee('sector_name');
+            ->assertStatus(200)
+            ->assertSee('sector_name')
+            ->assertViewHas('sector', $sector);
     }
 
     public function test_sector_can_be_updated(): void
@@ -155,7 +142,7 @@ class SectorTest extends TestCase
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(IndustrySeeder::class);
-        $industryIDs = Industry::pluck('id');
+        $sectorIDs = Industry::pluck('id');
         $this->seed(SectorSeeder::class);
         $sector = Sector::first();
         //When the user submits edited data
@@ -163,7 +150,7 @@ class SectorTest extends TestCase
             ->actingAs($user)
             ->put(route('sectors.update', $sector), [
                 'sector_name' => 'Software Engineering',
-                'industry_id' => fake()->randomElement($industryIDs),
+                'sector_id' => fake()->randomElement($sectorIDs),
             ]);
         $response
             ->assertSessionHasNoErrors();

@@ -50,11 +50,9 @@ class ImpactTest extends TestCase
             ->actingAs($user)
             ->get('/impacts/create');
         //The user sees a page with a form to create a record
-        $response->assertStatus(200);
-        $view = $this->blade(
-            '<x-text-input id="impact-name" name="impact_name" type="text" />',
-        );
-        $view->assertSee('impact_name');
+        $response
+            ->assertStatus(200)
+            ->assertSee('impact_name');
     }
 
     /**
@@ -124,11 +122,9 @@ class ImpactTest extends TestCase
             ->get(route('impacts.edit', $impact));
         //The user sees a page with a form to edit the record
         $response
-            ->assertStatus(200);
-        $view = $this->blade(
-            '<x-text-input id="impact-name" name="impact_name" type="text" />',
-        );
-        $view->assertSee('impact_name');
+            ->assertStatus(200)
+            ->assertSee('impact_name')
+            ->assertViewHas('impact', $impact);
     }
 
     /**

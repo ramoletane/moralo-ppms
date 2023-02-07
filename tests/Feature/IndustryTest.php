@@ -19,30 +19,30 @@ class IndustryTest extends TestCase
      * @return void
      */
   
-     public function test_industries_can_be_listed()
-     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //Given a saved record
-         $this->seed(IndustrySeeder::class);
-         //When a user visits the index page
-         $response = $this->actingAs($user)
-             ->get(route('industries.index', [
-                 'industries' => Industry::all(),
-             ]));
-         //The user sees a list of records from the database
-         $response
-             ->assertStatus(200);
-     }
- 
+    public function test_industries_can_be_listed()
+    {
+        //Given a logged in user
+        $user = User::factory()->create();
+        //Given a saved record
+        $this->seed(IndustrySeeder::class);
+        //When a user visits the index page
+        $response = $this->actingAs($user)
+            ->get(route('industries.index', [
+                'industries' => Industry::all(),
+            ]));
+        //The user sees a list of records from the database
+        $response
+            ->assertStatus(200);
+    }
+
     /**
      * Test navigation to the record creation page.
      *
      * @return void
      */
 
-     public function test_industry_creation_page_can_be_rendered(): void
-     {
+    public function test_industry_creation_page_can_be_rendered(): void
+    {
         //Given a logged in user
         $user = User::factory()->create();
         //When the user clicks on a button to create a record
@@ -50,12 +50,10 @@ class IndustryTest extends TestCase
             ->actingAs($user)
             ->get('/industries/create');
         //The user sees a page with a form to create a record
-        $response->assertStatus(200);
-        $view = $this->blade(
-            '<x-text-input id="industry-name" name="industry_name" type="text" />',
-        );
-        $view->assertSee('industry_name');
-     }
+        $response
+            ->assertStatus(200)
+            ->assertSee('industry_name');
+    }
 
     /**
      * Test the create (store) operation.
@@ -88,8 +86,8 @@ class IndustryTest extends TestCase
      * @return void
      */
 
-     public function test_industry_can_be_read() : void
-     {
+    public function test_industry_can_be_read() : void
+    {
          //Given a logged in user
          $user = User::factory()->create();    
          //Given a saved record
@@ -103,7 +101,7 @@ class IndustryTest extends TestCase
          $response
              ->assertStatus(200)
              ->assertSeeText($industry->industry_name);
-     }
+    }
 
     /**
      * Test navigation to the edit page.
@@ -124,11 +122,9 @@ class IndustryTest extends TestCase
             ->get(route('industries.edit', $industry));
         //The user sees a page with a form to edit the record
         $response
-            ->assertStatus(200);
-        $view = $this->blade(
-            '<x-text-input id="industry-name" name="industry_name" type="text" />',
-        );
-        $view->assertSee('industry_name');
+            ->assertStatus(200)
+            ->assertSee('industry_name')
+            ->assertViewHas('industry', $industry);
     }
 
     /**

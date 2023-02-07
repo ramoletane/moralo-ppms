@@ -28,18 +28,12 @@ class OrganisationTest extends TestCase
             ->actingAs($user)
             ->get('/organisations/create');
         //The user sees a page with a form to create a record
-        $response->assertStatus(200);
-        $view = $this->blade(
-            '<div>
-                <x-text-input id="company-name" name="company_name" type="text" />
-                <x-text-input id="email-address" name="email_address" type="text" />
-                <x-text-input id="phone-number" name="phone_number" type="text" />
-            </div>'
-        );
-        $view->assertSee('company_name');
-        $view->assertSee('email_address');
-        $view->assertSee('phone_number');
-     }
+        $response
+            ->assertStatus(200)
+            ->assertSee('company_name')
+            ->assertSee('email_address')
+            ->assertSee('phone_number');
+        }
 
     /**
      * Test the create (store) operation.
@@ -111,17 +105,11 @@ class OrganisationTest extends TestCase
             ->get(route('organisations.edit', $organisation));
         //The user sees a page with a form to edit the record
         $response
-            ->assertStatus(200);
-        $view = $this->blade(
-            '<div>
-                <x-text-input id="company-name" name="company_name" type="text" />
-                <x-text-input id="email-address" name="email_address" type="text" />
-                <x-text-input id="phone-number" name="phone_number" type="text" />
-            </div>'
-        );
-        $view->assertSee('company_name');
-        $view->assertSee('email_address');
-        $view->assertSee('phone_number');
+            ->assertStatus(200)
+            ->assertSee('company_name')
+            ->assertSee('email_address')
+            ->assertSee('phone_number')
+            ->assertViewHas('organisation', $organisation);
     }
 
     /**
