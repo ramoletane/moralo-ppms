@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('competency_groups', function (Blueprint $table) {
             $table->id();
-            $table->string('group_name');
+            $table->string('group_name')->unique();
             $table->timestamps();
         });
     }

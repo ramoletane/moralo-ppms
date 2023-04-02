@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('impacts', function (Blueprint $table) {
+        Schema::create('proficiency_levels', function (Blueprint $table) {
             $table->id();
-            $table->string('impact_name')->unique();
+            $table->string('level_name')->unique();
+            $table->string('level_description');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('impacts');
+        Schema::dropIfExists('proficiency_levels');
     }
 };

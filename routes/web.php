@@ -7,6 +7,9 @@ use App\Http\Controllers\IndustryController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\ImpactController;
 use App\Http\Controllers\CompetencyGroupController;
+use App\Http\Controllers\DevelopmentMethodController;
+use App\Http\Controllers\SkillDevelopmentMethodController;
+use App\Http\Controllers\ProficiencyLevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('sectors', SectorController::class);
     Route::resource('impacts', ImpactController::class);
     Route::resource('competency_groups', CompetencyGroupController::class);
+    Route::resource('development_methods', DevelopmentMethodController::class);
+    Route::resource('skill_development_methods', SkillDevelopmentMethodController::class);
+    Route::resource('proficiency_levels', ProficiencyLevelController::class);
 });
 
 Route::resource('results', ResultController::class)

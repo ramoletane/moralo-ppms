@@ -7,19 +7,19 @@
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th class="border text-left px-2 bg-slate-100">Competency Groups</th>
+                        <th class="border text-left px-2 bg-slate-100">Development Methods</th>
                         <th class="border bg-slate-100">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                    @foreach ($competency_groups as $competency_group)
+                    @foreach ($development_methods as $development_method)
                         <tr>
                             <td class="border px-2 text-lg text-gray-900">
-                                {{ $competency_group->group_name }}
+                                {{ $development_method->method_name }}
                             </td>
                             <td class="border text-center">
-{{--                            @if ($competency_group->user->is(auth()->user())) --}}
+{{--                            @if ($development_method->user->is(auth()->user())) --}}
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button>
@@ -29,13 +29,13 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                        <x-dropdown-link :href="route('competency_groups.edit',$competency_group)">
+                                        <x-dropdown-link :href="route('development_methods.edit',$development_method)">
                                             {{ __('Edit') }}
                                         </x-dropdown-link>
-                                        <form method="POST" action="{{ route('competency_groups.destroy',$competency_group) }}">
+                                        <form method="POST" action="{{ route('development_methods.destroy',$development_method) }}">
                                             @csrf
                                             @method('delete')
-                                            <x-dropdown-link :href="route('competency_groups.destroy',$competency_group)" onclick="event.preventDefault(); this.closest('form').submit();">
+                                            <x-dropdown-link :href="route('development_methods.destroy',$development_method)" onclick="event.preventDefault(); this.closest('form').submit();">
                                                 {{ __('Delete') }}
                                             </x-dropdown-link>
                                         </form>
@@ -50,7 +50,7 @@
 
         </div>
 
-        <x-primary-button-link :href="route('competency_groups.create')" class="mt-4">{{ __('Add Competency Group') }}</x-primary-button>
+        <x-primary-button-link :href="route('development_methods.create')" class="mt-4">{{ __('Add Competency Group') }}</x-primary-button>
  
     </div>
 </x-app-layout>

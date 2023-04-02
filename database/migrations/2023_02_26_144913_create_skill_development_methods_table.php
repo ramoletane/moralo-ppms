@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('impacts', function (Blueprint $table) {
+        Schema::create('skill_development_methods', function (Blueprint $table) {
             $table->id();
-            $table->string('impact_name')->unique();
+            $table->foreignId('skill_id');
+            $table->foreignId('development_method_id');
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('impacts');
+        Schema::dropIfExists('skill_development_methods');
     }
 };

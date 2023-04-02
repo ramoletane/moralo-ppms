@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 Use App\Models\Industry;
 use App\Models\Sector;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SectorController extends Controller
 {
@@ -15,8 +16,11 @@ class SectorController extends Controller
      */
     public function index()
     {
+        $sectors = DB::table('sectors')
+                    ->join('industries', 'sectors.industry_id', '=', 'industries.id')
+                    ->get();
         return view('sectors.index', [
-            'sectors' => sector::all(),
+            'sectors' => $sectors,
         ]);
     }
 
@@ -42,6 +46,7 @@ class SectorController extends Controller
     {
         $validated = $request->validate([
             'sector_name' => 'required|string|max:255',
+            'industry_id' => 'numeric',
         ]);
  
         Sector::create($validated);
@@ -87,11 +92,12 @@ class SectorController extends Controller
     {
         $validated = $request->validate([
             'sector_name' => 'required|string|max:255',
+            'industry_id' => 'numeric',
         ]);
  
         $sector->update($validated);
  
-        return redirect(route('sectors.show', $sector));
+        return redirect(route('sectors.index', $sector));
     }
 
     /**
