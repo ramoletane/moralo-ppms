@@ -10,6 +10,7 @@ use App\Http\Controllers\CompetencyGroupController;
 use App\Http\Controllers\DevelopmentMethodController;
 use App\Http\Controllers\SkillDevelopmentMethodController;
 use App\Http\Controllers\ProficiencyLevelController;
+use App\Http\Controllers\SkillController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('development_methods', DevelopmentMethodController::class);
     Route::resource('skill_development_methods', SkillDevelopmentMethodController::class);
     Route::resource('proficiency_levels', ProficiencyLevelController::class);
+    Route::resource('skills', SkillController::class);
 });
 
 Route::resource('results', ResultController::class)

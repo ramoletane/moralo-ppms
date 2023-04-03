@@ -58,14 +58,17 @@
                             </div>
                         </x-slot>
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('skills.index')">
+                                {{ __('Skills') }}
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('competency_groups.index')">
                                 {{ __('Competency Groups') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('impacts.index')">
-                                {{ __('Competencies') }}
+                            <x-dropdown-link :href="route('development_methods.index')">
+                                {{ __('Tools/Methods to Develop Skills') }}
                             </x-dropdown-link>
-                            <x-dropdown-link :href="route('sectors.index')">
-                                {{ __('Skills') }}
+                            <x-dropdown-link :href="route('proficiency_levels.index')">
+                                {{ __('Proficiency Levels') }}
                             </x-dropdown-link>
                         </x-slot>
                     </x-dropdown>
