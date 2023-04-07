@@ -7,7 +7,7 @@
                     <div class="flex-1">
                         <div class="flex justify-between items-center">
                             <div>
-                                <span class="text-gray-800">Development Method/Tool</span>
+                                <span class="text-gray-800">Tool/Method to Develop Skills</span>
                             </div>
 {{--                            @if ($developmentMethod->user->is(auth()->user())) --}}
                                 <x-dropdown>

@@ -50,7 +50,7 @@
 
         </div>
 
-        <x-primary-button-link :href="route('skills.create')" class="mt-4">{{ __('Add Competency Group') }}</x-primary-button>
+        <x-primary-button-link :href="route('skills.create')" class="mt-4">{{ __('Add Skill') }}</x-primary-button>
  
     </div>
 </x-app-layout>

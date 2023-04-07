@@ -3,7 +3,7 @@
         <form method="POST" action="{{ route('development_methods.update', $developmentMethod) }}">
             @csrf
             @method('patch')
-            <x-input-label for="method-name" :value="__('Development Method/Tool')" />
+            <x-input-label for="method-name" :value="__('Tool/Method to Develop Skills')" />
             <x-text-input id="method-name" name="method_name" type="text" class="mt-1 block w-full" :value="old('method_name', $developmentMethod->method_name)" required autofocus autocomplete="method-name" />
             <x-input-error :messages="$errors->get('method_name')" class="mt-2" />
             <div class="mt-4 space-x-2">

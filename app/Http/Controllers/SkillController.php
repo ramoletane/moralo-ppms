@@ -26,7 +26,7 @@ class SkillController extends Controller
      */
     public function create()
     {
-        //
+        return view('skills.create');
     }
 
     /**
@@ -37,7 +37,13 @@ class SkillController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'skill_name' => 'required|string|max:255',
+        ]);
+ 
+        Skill::create($validated);
+ 
+        return redirect(route('skills.index'));
     }
 
     /**
@@ -48,7 +54,9 @@ class SkillController extends Controller
      */
     public function show(Skill $skill)
     {
-        //
+        return view('skills.show', [
+            'skill' => Skill::find($skill->id),
+        ]);
     }
 
     /**
@@ -59,7 +67,9 @@ class SkillController extends Controller
      */
     public function edit(Skill $skill)
     {
-        //
+        return view('skills.edit', [
+            'skill' => $skill,
+        ]);
     }
 
     /**

@@ -43,18 +43,18 @@ class SkillTest extends TestCase
      * @return void
      */
  
-     public function test_development_method_creation_page_can_be_rendered(): void
+     public function test_skill_creation_page_can_be_rendered(): void
      {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //When the user clicks on a button to create a record
-         $response = $this
-             ->actingAs($user)
-             ->get('/skills/create');
-         //The user sees a page with a form to create a record
-         $response
-             ->assertStatus(200)
-             ->assertSee('method_name');
+        //Given a logged in user
+        $user = User::factory()->create();
+        //When the user clicks on a button to create a record
+        $response = $this
+            ->actingAs($user)
+            ->get('/skills/create');
+        //The user sees a page with a form to create a record
+        $response
+            ->assertStatus(200)
+            ->assertSee('skill_name');
      }
  
     /**
@@ -63,23 +63,23 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_can_be_created() : void
+    public function test_skill_can_be_created() : void
     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //When the user submits new data
-         $response = $this
-             ->actingAs($user)
-             ->post(route('skills.store', [
-                 'method_name' => 'Training',
-             ]));
-         $response
-             ->assertSessionHasNoErrors()
-             ->assertRedirect('/skills');
-         //A matching record becomes available in the database
-         $this->assertDatabaseHas('skills', [
-             'method_name' => 'Training',
-         ]);
+        //Given a logged in user
+        $user = User::factory()->create();
+        //When the user submits new data
+        $response = $this
+            ->actingAs($user)
+            ->post(route('skills.store', [
+                'skill_name' => 'Leadership',
+            ]));
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/skills');
+        //A matching record becomes available in the database
+        $this->assertDatabaseHas('skills', [
+            'skill_name' => 'Leadership',
+        ]);
     }
  
     /**
@@ -88,21 +88,21 @@ class SkillTest extends TestCase
      * @return void
      */
  
-     public function test_development_method_can_be_read() : void
+     public function test_skill_can_be_read() : void
      {
          //Given a logged in user
          $user = User::factory()->create();    
          //Given a saved record
          $this->seed(SkillSeeder::class);
          //When the user clicks on a link to the record
-         $developmentMethod = Skill::first();
+         $skill = Skill::first();
          $response = $this
              ->actingAs($user)
-             ->get(route('skills.show', $developmentMethod));
+             ->get(route('skills.show', $skill));
          //The user sees the seleted record on the page displayed
          $response
              ->assertStatus(200)
-             ->assertSeeText($developmentMethod->method_name);
+             ->assertSeeText($skill->skill_name);
      }
  
     /**
@@ -111,21 +111,22 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_editing_page_can_be_rendered(): void
+    public function test_skill_editing_page_can_be_rendered(): void
     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //Given a saved record
-         $this->seed(SkillSeeder::class);
-         $developmentMethod = Skill::first();
-         //When the user selects a record for editing
-         $response = $this
-             ->actingAs($user)
-             ->get(route('skills.edit', $developmentMethod));
-         //The user sees a page with a form to edit the record
-         $response
-             ->assertStatus(200)
-             ->assertSee('method_name');
+        //Given a logged in user
+        $user = User::factory()->create();
+        //Given a saved record
+        $this->seed(SkillSeeder::class);
+        $skill = Skill::first();
+        //When the user selects a record for editing
+        $response = $this
+            ->actingAs($user)
+            ->get(route('skills.edit', $skill));
+        //The user sees a page with a form to edit the record
+        $response
+            ->assertStatus(200)
+            ->assertSee('skill_name')
+            ->assertViewHas('skill', $skill);
     }
  
     /**
@@ -134,24 +135,24 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_can_be_updated(): void
+    public function test_skill_can_be_updated(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(SkillSeeder::class);
-        $developmentMethod = Skill::first();
+        $skill = Skill::first();
         //When the user submits edited data
         $response = $this
             ->actingAs($user)
-            ->put(route('skills.update', $developmentMethod), [
-                'method_name' => 'Training',
+            ->put(route('skills.update', $skill), [
+                'skill_name' => 'Training',
             ]);
         $response
             ->assertSessionHasNoErrors();
         //The database contains the updated record
         $this->assertDatabaseHas('skills', [
-            'method_name' => 'Training',
+            'skill_name' => 'Training',
         ]);
     }
  
@@ -161,20 +162,20 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_can_be_deleted() : void
+    public function test_skill_can_be_deleted() : void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(SkillSeeder::class);
-        $developmentMethod = Skill::first();
+        $skill = Skill::first();
         //When the user chooses a record to delete  
         $response = $this
             ->actingAs($user)
-            ->delete(route('skills.destroy', $developmentMethod));
+            ->delete(route('skills.destroy', $skill));
         //The database does not contain the deleted record
         $this->assertDatabaseMissing('skills', [
-            'method_name' => $developmentMethod->method_name,
+            'skill_name' => $skill->skill_name,
         ]);
     }
      

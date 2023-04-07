@@ -7,7 +7,7 @@
             <table class="table-auto w-full">
                 <thead>
                     <tr>
-                        <th class="border text-left px-2 bg-slate-100">Development Methods</th>
+                        <th class="border text-left px-2 bg-slate-100">Tools/Methods to Develop Skills</th>
                         <th class="border bg-slate-100">Actions</th>
                     </tr>
                 </thead>
@@ -50,7 +50,7 @@
 
         </div>
 
-        <x-primary-button-link :href="route('development_methods.create')" class="mt-4">{{ __('Add Competency Group') }}</x-primary-button>
+        <x-primary-button-link :href="route('development_methods.create')" class="mt-4">{{ __('Add Tools/Methods') }}</x-primary-button>
  
     </div>
 </x-app-layout>
