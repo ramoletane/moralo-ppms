@@ -14,13 +14,37 @@ class OrganisationTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Test navigation to the record creation page.
+     * Test the list (index) operation.
      *
      * @return void
      */
 
-     public function test_organisation_creation_page_can_be_rendered(): void
-     {
+    public function test_organisations_can_be_listed(): void
+    {
+        //Given a logged in user
+        $user = User::factory()->create();
+        //Given a saved record
+        $this->seed(OrganisationSeeder::class);
+        $organisation = Organisation::first();
+        //When a user visits the index page
+        $response = $this->actingAs($user)
+            ->get(route('organisations.index', [
+                'organisations' => Organisation::all(),
+            ]));
+        //The user sees a list of records from the database
+        $response
+            ->assertStatus(200)
+            ->assertSeeText($organisation->company_name);
+    }
+
+    /**
+     * Test navigation to the record creation page.
+     *
+     * @return void
+     */
+  
+    public function test_organisation_creation_page_can_be_rendered(): void
+    {
         //Given a logged in user
         $user = User::factory()->create();
         //When the user clicks on a button to create a record
@@ -33,7 +57,7 @@ class OrganisationTest extends TestCase
             ->assertSee('company_name')
             ->assertSee('email_address')
             ->assertSee('phone_number');
-        }
+    }
 
     /**
      * Test the create (store) operation.
@@ -69,14 +93,14 @@ class OrganisationTest extends TestCase
      * @return void
      */
 
-    public function test_organisation_can_be_read() : void
+    public function test_organisation_can_be_read(): void
     {
         //Given a logged in user
         $user = User::factory()->create();    
         //Given a saved record
         $this->seed(OrganisationSeeder::class);
-        //When the user clicks on a link to the record
         $organisation = Organisation::first();
+        //When the user clicks on a link to the record
         $response = $this
             ->actingAs($user)
             ->get(route('organisations.show', $organisation));
@@ -148,7 +172,7 @@ class OrganisationTest extends TestCase
      * @return void
      */
 
-    public function test_organisation_can_be_deleted() : void
+    public function test_organisation_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -164,26 +188,5 @@ class OrganisationTest extends TestCase
             'company_name' => $organisation->company_name,
         ]);
     }
-
-    /**
-     * Test the list (index) operation.
-     *
-     * @return void
-     */
   
-    public function test_organisations_can_be_listed()
-    {
-        //Given a logged in user
-        $user = User::factory()->create();
-        //Given a saved record
-        $this->seed(OrganisationSeeder::class);
-        //When a user visits the index page
-        $response = $this->actingAs($user)
-            ->get(route('organisations.index', [
-                'organisations' => Organisation::all(),
-            ]));
-        //The user sees a list of records from the database
-        $response
-            ->assertStatus(200);
-    }
 }

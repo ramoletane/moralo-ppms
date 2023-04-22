@@ -19,12 +19,13 @@ class ImpactTest extends TestCase
      * @return void
      */
   
-    public function test_impacts_can_be_listed()
+    public function test_impacts_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(ImpactSeeder::class);
+        $impact = Impact::first();
         //When a user visits the index page
         $response = $this->actingAs($user)
             ->get(route('impacts.index', [
@@ -32,7 +33,8 @@ class ImpactTest extends TestCase
             ]));
         //The user sees a list of records from the database
         $response
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertSeeText($impact->impact_name);
     }
  
     /**
@@ -61,7 +63,7 @@ class ImpactTest extends TestCase
      * @return void
      */
  
-    public function test_impact_can_be_created() : void
+    public function test_impact_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -86,14 +88,14 @@ class ImpactTest extends TestCase
      * @return void
      */
 
-    public function test_impact_can_be_read() : void
+    public function test_impact_can_be_read(): void
     {
         //Given a logged in user
         $user = User::factory()->create();    
         //Given a saved record
         $this->seed(ImpactSeeder::class);
-        //When the user clicks on a link to the record
         $impact = Impact::first();
+        //When the user clicks on a link to the record
         $response = $this
             ->actingAs($user)
             ->get(route('impacts.show', $impact));
@@ -160,7 +162,7 @@ class ImpactTest extends TestCase
      * @return void
      */
 
-    public function test_impact_can_be_deleted() : void
+    public function test_impact_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

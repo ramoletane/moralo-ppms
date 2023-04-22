@@ -20,12 +20,13 @@ class SkillTest extends TestCase
      * @return void
      */
 
-    public function test_skills_can_be_listed()
+    public function test_skills_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(SkillSeeder::class);
+        $skill = Skill::first();
         //When a user visits the index page
         $response = $this->actingAs($user)
             ->get(route('skills.index', [
@@ -34,7 +35,7 @@ class SkillTest extends TestCase
         //The user sees a list of records from the database
         $response
             ->assertStatus(200)
-            ->assertSee('Leadership');
+            ->assertSeeText($skill->skill_name);
     }
  
     /**
@@ -63,7 +64,7 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_skill_can_be_created() : void
+    public function test_skill_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -88,22 +89,22 @@ class SkillTest extends TestCase
      * @return void
      */
  
-     public function test_skill_can_be_read() : void
-     {
-         //Given a logged in user
-         $user = User::factory()->create();    
-         //Given a saved record
-         $this->seed(SkillSeeder::class);
-         //When the user clicks on a link to the record
-         $skill = Skill::first();
-         $response = $this
-             ->actingAs($user)
-             ->get(route('skills.show', $skill));
-         //The user sees the seleted record on the page displayed
-         $response
-             ->assertStatus(200)
-             ->assertSeeText($skill->skill_name);
-     }
+    public function test_skill_can_be_read(): void
+    {
+        //Given a logged in user
+        $user = User::factory()->create();    
+        //Given a saved record
+        $this->seed(SkillSeeder::class);
+        $skill = Skill::first();
+        //When the user clicks on a link to the record
+        $response = $this
+            ->actingAs($user)
+            ->get(route('skills.show', $skill));
+        //The user sees the seleted record on the page displayed
+        $response
+            ->assertStatus(200)
+            ->assertSeeText($skill->skill_name);
+    }
  
     /**
      * Test navigation to the edit page.
@@ -162,7 +163,7 @@ class SkillTest extends TestCase
      * @return void
      */
  
-    public function test_skill_can_be_deleted() : void
+    public function test_skill_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

@@ -19,22 +19,23 @@ class DevelopmentMethodTest extends TestCase
      * @return void
      */
 
-     public function test_development_methods_can_be_listed()
-     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //Given a saved record
-         $this->seed(DevelopmentMethodSeeder::class);
-         //When a user visits the index page
-         $response = $this->actingAs($user)
-             ->get(route('development_methods.index', [
-                 'development_methods' => DevelopmentMethod::all(),
-             ]));
-         //The user sees a list of records from the database
-         $response
-             ->assertStatus(200)
-             ->assertSee('Training');
-     }
+    public function test_development_methods_can_be_listed(): void
+    {
+        //Given a logged in user
+        $user = User::factory()->create();
+        //Given a saved record
+        $this->seed(DevelopmentMethodSeeder::class);
+        $developmentMethod = DevelopmentMethod::first();
+        //When a user visits the index page
+        $response = $this->actingAs($user)
+            ->get(route('development_methods.index', [
+                'development_methods' => DevelopmentMethod::all(),
+            ]));
+        //The user sees a list of records from the database
+        $response
+            ->assertStatus(200)
+            ->assertSee($developmentMethod->method_name);
+    }
  
     /**
      * Test navigation to the record creation page.
@@ -42,19 +43,19 @@ class DevelopmentMethodTest extends TestCase
      * @return void
      */
  
-     public function test_development_method_creation_page_can_be_rendered(): void
-     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //When the user clicks on a button to create a record
-         $response = $this
-             ->actingAs($user)
-             ->get('/development_methods/create');
-         //The user sees a page with a form to create a record
-         $response
-             ->assertStatus(200)
-             ->assertSee('method_name');
-     }
+    public function test_development_method_creation_page_can_be_rendered(): void
+    {
+        //Given a logged in user
+        $user = User::factory()->create();
+        //When the user clicks on a button to create a record
+        $response = $this
+            ->actingAs($user)
+            ->get('/development_methods/create');
+        //The user sees a page with a form to create a record
+        $response
+            ->assertStatus(200)
+            ->assertSee('method_name');
+    }
  
     /**
      * Test the create (store) operation.
@@ -62,23 +63,23 @@ class DevelopmentMethodTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_can_be_created() : void
+    public function test_development_method_can_be_created(): void
     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //When the user submits new data
-         $response = $this
-             ->actingAs($user)
-             ->post(route('development_methods.store', [
-                 'method_name' => 'Training',
-             ]));
-         $response
-             ->assertSessionHasNoErrors()
-             ->assertRedirect('/development_methods');
-         //A matching record becomes available in the database
-         $this->assertDatabaseHas('development_methods', [
-             'method_name' => 'Training',
-         ]);
+        //Given a logged in user
+        $user = User::factory()->create();
+        //When the user submits new data
+        $response = $this
+            ->actingAs($user)
+            ->post(route('development_methods.store', [
+                'method_name' => 'Training',
+            ]));
+        $response
+            ->assertSessionHasNoErrors()
+            ->assertRedirect('/development_methods');
+        //A matching record becomes available in the database
+        $this->assertDatabaseHas('development_methods', [
+            'method_name' => 'Training',
+        ]);
     }
  
     /**
@@ -87,22 +88,22 @@ class DevelopmentMethodTest extends TestCase
      * @return void
      */
  
-     public function test_development_method_can_be_read() : void
-     {
-         //Given a logged in user
-         $user = User::factory()->create();    
-         //Given a saved record
-         $this->seed(DevelopmentMethodSeeder::class);
-         //When the user clicks on a link to the record
-         $developmentMethod = DevelopmentMethod::first();
-         $response = $this
-             ->actingAs($user)
-             ->get(route('development_methods.show', $developmentMethod));
-         //The user sees the seleted record on the page displayed
-         $response
-             ->assertStatus(200)
-             ->assertSeeText($developmentMethod->method_name);
-     }
+    public function test_development_method_can_be_read(): void
+    {
+        //Given a logged in user
+        $user = User::factory()->create();    
+        //Given a saved record
+        $this->seed(DevelopmentMethodSeeder::class);
+        $developmentMethod = DevelopmentMethod::first();
+        //When the user clicks on a link to the record
+        $response = $this
+            ->actingAs($user)
+            ->get(route('development_methods.show', $developmentMethod));
+        //The user sees the seleted record on the page displayed
+        $response
+            ->assertStatus(200)
+            ->assertSeeText($developmentMethod->method_name);
+    }
  
     /**
      * Test navigation to the edit page.
@@ -112,19 +113,19 @@ class DevelopmentMethodTest extends TestCase
  
     public function test_development_method_editing_page_can_be_rendered(): void
     {
-         //Given a logged in user
-         $user = User::factory()->create();
-         //Given a saved record
-         $this->seed(DevelopmentMethodSeeder::class);
-         $developmentMethod = DevelopmentMethod::first();
-         //When the user selects a record for editing
-         $response = $this
-             ->actingAs($user)
-             ->get(route('development_methods.edit', $developmentMethod));
-         //The user sees a page with a form to edit the record
-         $response
-             ->assertStatus(200)
-             ->assertSee('method_name');
+        //Given a logged in user
+        $user = User::factory()->create();
+        //Given a saved record
+        $this->seed(DevelopmentMethodSeeder::class);
+        $developmentMethod = DevelopmentMethod::first();
+        //When the user selects a record for editing
+        $response = $this
+            ->actingAs($user)
+            ->get(route('development_methods.edit', $developmentMethod));
+        //The user sees a page with a form to edit the record
+        $response
+            ->assertStatus(200)
+            ->assertSee('method_name');
     }
  
     /**
@@ -160,7 +161,7 @@ class DevelopmentMethodTest extends TestCase
      * @return void
      */
  
-    public function test_development_method_can_be_deleted() : void
+    public function test_development_method_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

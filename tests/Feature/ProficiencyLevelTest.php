@@ -14,17 +14,18 @@ class ProficiencyLevelTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * A basic feature test example.
+     * Test the list (index) operation.
      *
      * @return void
      */
 
-    public function test_proficiency_levels_can_be_listed()
+    public function test_proficiency_levels_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(ProficiencyLevelSeeder::class);
+        $proficiencyLevel = ProficiencyLevel::first();
         //When a user visits the index page
         $response = $this->actingAs($user)
             ->get(route('proficiency_levels.index', [
@@ -33,7 +34,8 @@ class ProficiencyLevelTest extends TestCase
         //The user sees a list of records from the database
         $response
             ->assertStatus(200)
-            ->assertSee('Basic');
+            ->assertSeeText($proficiencyLevel->level_name)
+            ->assertSeeText($proficiencyLevel->level_description);
     }
  
     /**
@@ -63,7 +65,7 @@ class ProficiencyLevelTest extends TestCase
      * @return void
      */
  
-    public function test_proficiency_level_can_be_created() : void
+    public function test_proficiency_level_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -90,14 +92,14 @@ class ProficiencyLevelTest extends TestCase
      * @return void
      */
  
-     public function test_proficiency_level_can_be_read() : void
-     {
+    public function test_proficiency_level_can_be_read(): void
+    {
         //Given a logged in user
         $user = User::factory()->create();    
         //Given a saved record
         $this->seed(ProficiencyLevelSeeder::class);
-        //When the user clicks on a link to the record
         $proficiencyLevel = ProficiencyLevel::first();
+        //When the user clicks on a link to the record
         $response = $this
             ->actingAs($user)
             ->get(route('proficiency_levels.show', $proficiencyLevel));
@@ -106,7 +108,7 @@ class ProficiencyLevelTest extends TestCase
             ->assertStatus(200)
             ->assertSeeText($proficiencyLevel->level_name)
             ->assertSeeText($proficiencyLevel->level_description);
-     }
+    }
  
     /**
      * Test navigation to the edit page.
@@ -167,7 +169,7 @@ class ProficiencyLevelTest extends TestCase
      * @return void
      */
  
-    public function test_proficiency_level_can_be_deleted() : void
+    public function test_proficiency_level_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

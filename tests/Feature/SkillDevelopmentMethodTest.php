@@ -24,7 +24,7 @@ class SkillDevelopmentMethodTest extends TestCase
      * @return void
      */
 
-    public function test_skill_development_methods_can_be_listed()
+    public function test_skill_development_methods_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -74,7 +74,7 @@ class SkillDevelopmentMethodTest extends TestCase
      * @return void
      */
  
-    public function test_skill_development_method_can_be_created() : void
+    public function test_skill_development_method_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -109,7 +109,7 @@ class SkillDevelopmentMethodTest extends TestCase
      * @return void
      */
  
-    public function test_skill_development_method_can_be_read() : void
+    public function test_skill_development_method_can_be_read(): void
     {
         //Given a logged in user
         $user = User::factory()->create();    
@@ -117,8 +117,8 @@ class SkillDevelopmentMethodTest extends TestCase
         $this->seed(SkillSeeder::class);
         $this->seed(DevelopmentMethodSeeder::class);
         $this->seed(SkillDevelopmentMethodSeeder::class);
-        //When the user clicks on a link to the record
         $skillDevelopmentMethod = SkillDevelopmentMethod::first();
+        //When the user clicks on a link to the record
         $response = $this
             ->actingAs($user)
             ->get(route('skill_development_methods.show', $skillDevelopmentMethod));
@@ -192,7 +192,7 @@ class SkillDevelopmentMethodTest extends TestCase
      * @return void
      */
  
-    public function test_skill_development_method_can_be_deleted() : void
+    public function test_skill_development_method_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

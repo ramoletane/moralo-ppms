@@ -21,13 +21,14 @@ class SectorTest extends TestCase
      * @return void
      */
   
-    public function test_sectors_can_be_listed()
+    public function test_sectors_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(IndustrySeeder::class);
         $this->seed(SectorSeeder::class);
+        $sector = Sector::first();
         //When a user visits the index page
         $response = $this->actingAs($user)
             ->get(route('sectors.index', [
@@ -35,7 +36,8 @@ class SectorTest extends TestCase
             ]));
         //The user sees a list of records from the database
         $response
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertSeeText($sector->sector_name);
     }
  
     /**
@@ -64,7 +66,7 @@ class SectorTest extends TestCase
      * @return void
      */
  
-    public function test_sector_can_be_created() : void
+    public function test_sector_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -92,7 +94,7 @@ class SectorTest extends TestCase
      * @return void
      */
 
-    public function test_sector_can_be_read() : void
+    public function test_sector_can_be_read(): void
     {
         //Given a logged in user
         $user = User::factory()->create();    
@@ -135,6 +137,12 @@ class SectorTest extends TestCase
             ->assertSee('sector_name')
             ->assertViewHas('sector', $sector);
     }
+ 
+    /**
+     * Test the update operation.
+     *
+     * @return void
+     */
 
     public function test_sector_can_be_updated(): void
     {
@@ -166,7 +174,7 @@ class SectorTest extends TestCase
      * @return void
      */
 
-    public function test_sector_can_be_deleted() : void
+    public function test_sector_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();

@@ -81,7 +81,13 @@ class SkillController extends Controller
      */
     public function update(Request $request, Skill $skill)
     {
-        //
+        $validated = $request->validate([
+            'skill_name' => 'required|string|max:255',
+        ]);
+ 
+        $skill->update($validated);
+ 
+        return redirect(route('skills.index', $skill));
     }
 
     /**
@@ -92,6 +98,8 @@ class SkillController extends Controller
      */
     public function destroy(Skill $skill)
     {
-        //
+        $skill->delete();
+ 
+        return redirect(route('skills.index'));
     }
 }

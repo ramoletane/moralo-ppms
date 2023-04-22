@@ -19,12 +19,13 @@ class IndustryTest extends TestCase
      * @return void
      */
   
-    public function test_industries_can_be_listed()
+    public function test_industries_can_be_listed(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
         //Given a saved record
         $this->seed(IndustrySeeder::class);
+        $industry = Industry::first();
         //When a user visits the index page
         $response = $this->actingAs($user)
             ->get(route('industries.index', [
@@ -32,8 +33,9 @@ class IndustryTest extends TestCase
             ]));
         //The user sees a list of records from the database
         $response
-            ->assertStatus(200);
-    }
+            ->assertStatus(200)
+            ->assertSeeText($industry->industry_name);
+        }
 
     /**
      * Test navigation to the record creation page.
@@ -61,7 +63,7 @@ class IndustryTest extends TestCase
      * @return void
      */
  
-    public function test_industry_can_be_created() : void
+    public function test_industry_can_be_created(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
@@ -86,21 +88,21 @@ class IndustryTest extends TestCase
      * @return void
      */
 
-    public function test_industry_can_be_read() : void
+    public function test_industry_can_be_read(): void
     {
-         //Given a logged in user
-         $user = User::factory()->create();    
-         //Given a saved record
-         $this->seed(IndustrySeeder::class);
-         //When the user clicks on a link to the record
-         $industry = Industry::first();
-         $response = $this
-             ->actingAs($user)
-             ->get(route('industries.show', $industry));
-         //The user sees the seleted record on the page displayed
-         $response
-             ->assertStatus(200)
-             ->assertSeeText($industry->industry_name);
+        //Given a logged in user
+        $user = User::factory()->create();    
+        //Given a saved record
+        $this->seed(IndustrySeeder::class);
+        $industry = Industry::first();
+        //When the user clicks on a link to the record
+        $response = $this
+            ->actingAs($user)
+            ->get(route('industries.show', $industry));
+        //The user sees the seleted record on the page displayed
+        $response
+            ->assertStatus(200)
+            ->assertSeeText($industry->industry_name);
     }
 
     /**
@@ -160,7 +162,7 @@ class IndustryTest extends TestCase
      * @return void
      */
 
-    public function test_industry_can_be_deleted() : void
+    public function test_industry_can_be_deleted(): void
     {
         //Given a logged in user
         $user = User::factory()->create();
